@@ -10,14 +10,16 @@ import { ToastContainer } from "react-toastify";
 class Weather extends React.Component {
   constructor(props) {
     super(props);
+  
     this.state = {
       searchInput: ""
     };
   }
 
   componentDidMount() {
-    const { GetWeatherDetails } = this.props.action;
-    GetWeatherDetails();
+    // const { GetWeatherDetails  } = this.props.action;
+    // GetWeatherDetails();
+
   }
   handleSubmit = e => {
     e.preventDefault();
@@ -32,9 +34,9 @@ class Weather extends React.Component {
     });
   };
   render() {
-    const { data, success } = this.props.weatherData;
+    const { data, success, city,loading ,error } = this.props.weatherData;
+    const { searchInput } = city;
     
-    const { searchInput } = this.state;
 
     return (
       <>
@@ -50,6 +52,7 @@ class Weather extends React.Component {
             <button>Find</button>
           </form>
           <div className="helper-text">Type City Name and Hit Enter</div>
+         { success && data && 
           <div className="info">
             <div className="sub-heading">
               Weather Forecast <div>on</div>
@@ -102,6 +105,9 @@ class Weather extends React.Component {
               </ul>
             </div>
           </div>
+          }
+           { loading && <div> Loading... </div> }  
+           { error && <div> Something Went Worng... or enter a valid input </div> }  
         </div>
         <ToastContainer />
       </>
